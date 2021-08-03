@@ -1,0 +1,36 @@
+#headingBlockCard {
+    background-color: lightgray;
+    text-align: center; 
+}
+
+.btn-Sorting {
+    background-color: #FFA903;
+    border-color: #FFA903;
+    color: black;
+}
+
+.row{
+    display: flex;
+}
+.column{
+    flex: 40%;
+    margin: 15px;
+}
+
+.peopleCards{
+    text-align: center;
+}
+
+#formTitle{
+    text-align:  center;
+}
+
+#submitBlock{
+    display: flex;
+    justify-content: center;
+};
+
+.student-form{
+    flex: 40%;
+}
+
