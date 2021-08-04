@@ -1,43 +1,11 @@
-// const houseArray = [
-//     {
-//         studentName: "studentNameFunction",
-//         house: "Gryfindoor",
-//         imageURL: "red",
-//     },
-//     {
-//         studentName: "studentNameFunction",
-//         house: "Hufflepuff",
-//         imageURL: "yellow",
-//     },
-//     {
-//         studentName: "studentNameFunction",
-//         house: "Ravenclaw",
-//         imageURL: "blue",
-//     },
-//     {
-//         studentName: "studentNameFunction",
-//         house: "Slytherin",
-//         imageURL: "green",
-//     },
-//     {
-//         studentName: "studentNameFunction",
-//         house: "deathEater",
-//         imageURL: "black",
-//     }
-// ];
-// const studentArray =[
-
-// ],
-// const deathEaterArray = [
-
-// ],
+const studentArray = [];
+const deathEaterArray = [];
+const houseArray = ["Gryffindor", "Hufflepuff", "Ravenclar", "Slytherin"]
 
 const renderToDom = (divId, textToPrint) => {
     const selectedDiv = document.querySelector(divId);
     selectedDiv.innerHTML = textToPrint;
   };
-
-
 
 const headingBlock = () => {
     const cardString = `  
@@ -52,8 +20,7 @@ const headingBlock = () => {
     renderToDom("#titleBlock", cardString);
 };
 
-
-const printSortingForm = () => {
+const printSortingForm = (studentObject = {}) => {
     const formString = `
         <form id="studentForm">
             <div id="formTitle"><h3>Enter First Year's Name</h3></div>
@@ -61,15 +28,13 @@ const printSortingForm = () => {
             <div id="submitBlock"> 
                 <div id=formId class="mb-3"?>
                     <label for="Student" class="sorting-form"> Student </label>
-                    <input type="text" class="sorting-form" placeholder="Luna Lovegood">
+                    <input type="text" class="sorting-form" placeholder="Luna Lovegood" value="${studentObject.studentName || ""}" id="stdName">
                 </div>
-                
-                <button type="submit" class="btn btn-Sorting btn-primary sorting-form">Submit</button>
+                <button type="submit" id="btnNewStudent" class="btn btn-Sorting btn-primary sorting-form">Sort</button>
             </div>
         </form>
     `;
 
-    // change to call renderToDom on click
     renderToDom("#formBlock", formString);
 };
 
@@ -79,15 +44,62 @@ const firstYearCardBlock = () => {
         <div class="card-body">
             <h5 class="card-title">First Year's</h5>
         </div>
+        <div id="studentArrayBody"></div>
     </div>
     `;
 
     renderToDom("#studentBlock", cardString);
 };
 
+const studentCard = (stdCardArray) => { 
+    let CardString = "";
+    stdCardArray.forEach((student) => {
+        CardString += ` 
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h5 id="studentName" class="card-title">${student.studentName}</h5>
+                    <h5 id="studentHouse" class="card-body">${student.studentHouse}</h5>
+                </div>
+                <a type="button" class="btn btn-danger" id="btnExpel">Expel!</a>
+            </div>`;
+ });
+ console.log(studentArray);
+    renderToDom("#studentArrayBody", studentArray);
+};
+
+const chosenHouse = () => {
+
+};
+
+const hseColor = () => {
+
+};
+
+const newStudentSubmit = (event) =>{
+    event.preventDefault();
+
+const newStudent = {
+        studentName: document.querySelector("#stdName").value,
+        studentHouse: chosenHouse,
+        houseColor: hseColor,
+};
+    studentArray.push(newStudent);
+
+
+}
+
+const newStudentEvent = () => {
+    const stduentElement = document.querySelector("#btnNewStudent");
+    stduentElement.addEventListener("submit", newStudentSubmit); 
+};
+
+
+
+
+
 const deathEaterCardBlock = () => {
     const cardString = `
-    <div class="card peopleCards">
+    <div class="card peopleCards" style="width: 18rem;">
     <div class="card-body">
       <h5 class="card-title">He Who Shall Not Be Named's Army</h5>
     </div>
@@ -99,22 +111,7 @@ const deathEaterCardBlock = () => {
     renderToDom("#deathEaterBlock", cardString);
 };
 
-// Student Card
-//         <div class="card mb-3" style="max-width: 540px;">
-//         <div class="row g-0">
-//             <div class="col-md-4">
-//             <img src="..." class="img-fluid rounded-start" alt="...">
-//             </div>
-//             <div class="col-md-8">
-//             <div class="card-body">
-//                 <h5 class="card-title">Card title</h5>
-//                 <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-//                 <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-//             </div>
-//             </div>
-//         </div>
-//         </div>
-        
+
 //         Death Eater Card
 //         </div>/
 //         <div class="card" style="width: 18rem;">
@@ -129,16 +126,19 @@ const deathEaterCardBlock = () => {
 
   const btnClicks = (event) => {
       if (event.target.id === "btnStartSorting"){
-        printSortingForm();
-          
-      }else {
+        printSortingForm();    
+      }
+    //   else if (event.target.id === "btnNewStudent"){
+    //     studentCard(studentArray);
+    //   }
+      else {
         console.log(null);
       }
   };
 
   const btnEvents = () => {
       document.querySelector("#btnStartSorting").addEventListener("click", btnClicks);
-       
+      document.querySelector("#btnNewStudent").addEventListener("submit", btnClicks);
   };
 
 
@@ -146,8 +146,10 @@ const init = () => {
     headingBlock ();                  
     firstYearCardBlock ();
     deathEaterCardBlock ();
+
     
     btnEvents ();
+    newStudentEvent ();
 };
 
 init();
