@@ -1,6 +1,4 @@
-const studentArray = [];
 const deathEaterArray = [];
-const houseArray = ["Gryffindor", "Hufflepuff", "Ravenclar", "Slytherin"]
 
 const renderToDom = (divId, textToPrint) => {
     const selectedDiv = document.querySelector(divId);
@@ -14,7 +12,7 @@ const headingBlock = () => {
         <p>All students get sorted into a house that best suits their personalities, goals, and personal styles.</p>
         <hr>
         <h3 class="card-title">Let us begin sorting!</h3>
-        <a id="btnStartSorting" class="btn btn-Sorting btn-primary">Start Sorting</a>
+        <button type="button" id="btnStartSorting" class="btn btn-Sorting btn-primary">Start Sorting</button>
     </div>`;
 
     renderToDom("#titleBlock", cardString);
@@ -34,8 +32,8 @@ const printSortingForm = (studentObject = {}) => {
             </div>
         </form>
     `;
-
     renderToDom("#formBlock", formString);
+    document.querySelector("#btnNewStudent").addEventListener("click", formSubmit);
 };
 
 const firstYearCardBlock = () => {
@@ -51,66 +49,64 @@ const firstYearCardBlock = () => {
     renderToDom("#studentBlock", cardString);
 };
 
+const studentArray = [];
+
 const studentCard = (stdCardArray) => { 
-    let CardString = "";
-    stdCardArray.forEach((student) => {
-        CardString += ` 
-            <div class="card mb-3">
-                <div class="card-body">
-                    <h5 id="studentName" class="card-title">${student.studentName}</h5>
-                    <h5 id="studentHouse" class="card-body">${student.studentHouse}</h5>
-                </div>
-                <a type="button" class="btn btn-danger" id="btnExpel">Expel!</a>
-            </div>`;
+    let cardString = "";
+    stdCardArray.forEach((student, i) => {
+        cardString += ` 
+                <div class="card mb-3" style="max-width: 540px;">
+                    <div class="row g-0">
+                        <div class="col-md-4" id="hseColorBlock">
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card-body">
+                              <h5 id="studentName" class="card-title">${student.studentName}</h5>
+                              <h5 id="studentHouse" class="card-body">${student.studentHouse}</h5>
+                              <button type="button" class="btn btn-danger" id="${i}" >Expel!</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>`;
+             renderToDom("#studentArrayBody", cardString);  
  });
- console.log(studentArray);
-    renderToDom("#studentArrayBody", studentArray);
+    
 };
 
-const chosenHouse = () => {
+const houseArray = ["Gryffindor", "Hufflepuff", "Ravenclaw", "Slytherin"];
 
+const randomHouse = () => {
+    const chosenHouse = houseArray[Math.floor(Math.random() * houseArray.length)];
+    return chosenHouse;
 };
 
-const hseColor = () => {
 
-};
 
-const newStudentSubmit = (event) =>{
+
+const formSubmit = (event) =>{
     event.preventDefault();
-
-const newStudent = {
+    const newStudent = {
         studentName: document.querySelector("#stdName").value,
-        studentHouse: chosenHouse,
-        houseColor: hseColor,
-};
+        studentHouse: randomHouse (),
+    };
     studentArray.push(newStudent);
-
-
-}
-
-const newStudentEvent = () => {
-    const stduentElement = document.querySelector("#btnNewStudent");
-    stduentElement.addEventListener("submit", newStudentSubmit); 
+    studentCard(studentArray);
+    console.log(studentArray);
 };
-
-
 
 
 
 const deathEaterCardBlock = () => {
     const cardString = `
-    <div class="card peopleCards" style="width: 18rem;">
-    <div class="card-body">
-      <h5 class="card-title">He Who Shall Not Be Named's Army</h5>
-    </div>
-  </div>
+        <div class="card peopleCards" style="width: 18rem;">
+            <div class="card-body">
+                <h5 class="card-title">He Who Shall Not Be Named's Army</h5>
+            </div>
+        </div>
     `;
     // need to add function for "No Death Eaters...yet"
-
-
     renderToDom("#deathEaterBlock", cardString);
 };
-
 
 //         Death Eater Card
 //         </div>/
@@ -123,22 +119,15 @@ const deathEaterCardBlock = () => {
 //     )
 //     }
 
-
   const btnClicks = (event) => {
       if (event.target.id === "btnStartSorting"){
         printSortingForm();    
-      }
-    //   else if (event.target.id === "btnNewStudent"){
-    //     studentCard(studentArray);
-    //   }
-      else {
-        console.log(null);
-      }
+       }
   };
 
   const btnEvents = () => {
-      document.querySelector("#btnStartSorting").addEventListener("click", btnClicks);
-      document.querySelector("#btnNewStudent").addEventListener("submit", btnClicks);
+    document.querySelector("#btnStartSorting").addEventListener("click", btnClicks);
+    
   };
 
 
@@ -146,10 +135,11 @@ const init = () => {
     headingBlock ();                  
     firstYearCardBlock ();
     deathEaterCardBlock ();
+    studentCard (studentArray);
 
     
     btnEvents ();
-    newStudentEvent ();
+ //   formSubmit ();
 };
 
 init();
