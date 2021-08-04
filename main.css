@@ -9,6 +9,10 @@
     color: black;
 } */
 
+#btnNewStudent{
+    margin-left: 5px;
+}
+
 .row{
     display: flex;
 }
