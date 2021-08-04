@@ -3,11 +3,11 @@
     text-align: center; 
 }
 
-.btn-Sorting {
+/* .btn-Sorting {
     background-color: #FFA903;
     border-color: #FFA903;
     color: black;
-}
+} */
 
 .row{
     display: flex;
