@@ -46,13 +46,14 @@ const headingBlock = () => {
         <p>All students get sorted into a house that best suits their personalities, goals, and personal styles.</p>
         <hr>
         <h3 class="card-title">Let us begin sorting!</h3>
-        <a id = "btnStartSorting" class="btn btn-Sorting btn-primary">Start Sorting</a>
+        <a id="btnStartSorting" class="btn btn-Sorting btn-primary">Start Sorting</a>
     </div>`;
 
     renderToDom("#titleBlock", cardString);
 };
 
-const studentSortingForm = () =>{
+
+const printSortingForm = () => {
     const formString = `
         <form id="studentForm">
             <div id="formTitle"><h3>Enter First Year's Name</h3></div>
@@ -71,8 +72,6 @@ const studentSortingForm = () =>{
     // change to call renderToDom on click
     renderToDom("#formBlock", formString);
 };
-
-
 
 const firstYearCardBlock = () => {
     const cardString = `
@@ -128,13 +127,27 @@ const deathEaterCardBlock = () => {
 //     }
 
 
+  const btnClicks = (event) => {
+      if (event.target.id === "btnStartSorting"){
+        printSortingForm();
+          
+      }else {
+        console.log(null);
+      }
+  };
+
+  const btnEvents = () => {
+      document.querySelector("#btnStartSorting").addEventListener("click", btnClicks);
+       
+  };
+
+
 const init = () => {
     headingBlock ();                  
     firstYearCardBlock ();
     deathEaterCardBlock ();
-
-
-     studentSortingForm (); //delete this!!!
+    
+    btnEvents ();
 };
 
 init();
