@@ -1,4 +1,4 @@
-const deathEaterArray = [];
+
 
 const renderToDom = (divId, textToPrint) => {
     const selectedDiv = document.querySelector(divId);
@@ -26,7 +26,7 @@ const printSortingForm = (studentObject = {}) => {
             <div id="submitBlock"> 
                 <div id=formId class="mb-3"?>
                     <label for="Student" class="sorting-form"> Student </label>
-                    <input type="text" class="sorting-form" placeholder="Luna Lovegood" value="${studentObject.studentName || ""}" id="stdName">
+                    <input required type="text" class="sorting-form" placeholder="Luna Lovegood" value="${studentObject.studentName || ""}" id="stdName">
                 </div>
                 <button type="submit" id="btnNewStudent" class="btn btn-Sorting btn-primary sorting-form">Sort</button>
             </div>
@@ -38,7 +38,7 @@ const printSortingForm = (studentObject = {}) => {
 
 const firstYearCardBlock = () => {
     const cardString = `
-    <div class="card peopleCards">
+    <div class="card peopleCards" style="width: 18rem;">
         <div class="card-body">
             <h5 class="card-title">First Year's</h5>
         </div>
@@ -55,7 +55,7 @@ const studentCard = (stdCardArray) => {
     let cardString = "";
     stdCardArray.forEach((student, i) => {
         cardString += ` 
-                <div class="card mb-3" style="max-width: 540px;">
+                <div id="stdCard" class="card mb-3" style="width: 18rem;">
                     <div class="row g-0">
                         <div class="col-md-4" id="hseColorBlock">
                         </div>
@@ -63,13 +63,14 @@ const studentCard = (stdCardArray) => {
                             <div class="card-body">
                               <h5 id="studentName" class="card-title">${student.studentName}</h5>
                               <h5 id="studentHouse" class="card-body">${student.studentHouse}</h5>
-                              <button type="button" class="btn btn-danger" id="${i}" >Expel!</button>
+                              <button type="button" class="btn btn-danger btn-expel" id=delete--${i} >Expel!</button>
                             </div>
                         </div>
                     </div>
                 </div>`;
-             renderToDom("#studentArrayBody", cardString);  
- });
+        renderToDom("#studentArrayBody", cardString);  
+        document.querySelector("#stdCard").addEventListener("click", expelStudent);
+    });
     
 };
 
@@ -80,9 +81,6 @@ const randomHouse = () => {
     return chosenHouse;
 };
 
-
-
-
 const formSubmit = (event) =>{
     event.preventDefault();
     const newStudent = {
@@ -91,10 +89,8 @@ const formSubmit = (event) =>{
     };
     studentArray.push(newStudent);
     studentCard(studentArray);
-    console.log(studentArray);
+    document.forms["studentForm"].reset();
 };
-
-
 
 const deathEaterCardBlock = () => {
     const cardString = `
@@ -102,27 +98,64 @@ const deathEaterCardBlock = () => {
             <div class="card-body">
                 <h5 class="card-title">He Who Shall Not Be Named's Army</h5>
             </div>
+            <div id="voldyArmy"></div>
+            <div> ${anyDeathEaters()} </div>
         </div>
     `;
-    // need to add function for "No Death Eaters...yet"
     renderToDom("#deathEaterBlock", cardString);
+   
 };
 
-//         Death Eater Card
-//         </div>/
-//         <div class="card" style="width: 18rem;">
-//           <img src="..." class="card-img-top" alt="...">
-//           <div class="card-body">
-//             <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-//           </div>
-//         </div>
-//     )
+const anyDeathEaters = () => {
+    if (deathEaterArray > 0 ){
+        return "";
+    }else {
+       return "No Death Eaters... yet." 
+    }
+}
+
+const deathEaterArray = [];
+
+
+
+// const expelStudent = (event) => {
+//     event.preventDefault();
+//     const newTraitor = {
+//         studentName: 
 //     }
+//             studentArray.splice(event.target.id,1)[0];
+//             studentArray.push(deathEaterArray.splice()[0]);
+//             traitorCard();
+// }         
+
+
+
+
+const traitorCard = (vldCardArray) => { 
+    let cardString = "";
+    vldCardArray.forEach((traitor, i) => {
+        cardString += `  
+            <div class="card" style="width: 18rem;">
+                <img src="https://static.wikia.nocookie.net/harrypotter/images/d/d4/Death_Eaters_WBST.png/revision/latest?cb=20161205041948" class="card-img-top" alt="3 death eaters with wands">
+                <div class="card-body">
+                <h5 id="studentName" class="card-title">${traitor.studentName}</h5>
+                </div>
+            </div>`
+
+        renderToDom("#voldyArmy", cardString);
+    })
+}
+
+
+
+
+ 
 
   const btnClicks = (event) => {
-      if (event.target.id === "btnStartSorting"){
+    if (event.target.id === "btnStartSorting"){
         printSortingForm();    
-       }
+    }     
+
   };
 
   const btnEvents = () => {
@@ -136,10 +169,7 @@ const init = () => {
     firstYearCardBlock ();
     deathEaterCardBlock ();
     studentCard (studentArray);
-
-    
     btnEvents ();
- //   formSubmit ();
 };
 
 init();
