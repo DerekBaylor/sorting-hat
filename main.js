@@ -20,7 +20,7 @@ const printSortingForm = (studentObject = {}) => {
     const formString = `
         <form id="studentForm">
             <div id="formTitle"><h3>Enter First Year's Name</h3></div>
-            <div id="errorText" class="errText"></div> 
+            <div id="errorText"></div> 
             <div id="submitBlock"> 
                 <div id=formId class="mb-3"?>
                     <label for="Student" class="sorting-form"> Student </label>
