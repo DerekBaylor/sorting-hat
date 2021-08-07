@@ -3,11 +3,11 @@
     text-align: center; 
 }
 
-/* .btn-Sorting {
+.btn-Sorting {
     background-color: #FFA903;
     border-color: #FFA903;
     color: black;
-} */
+}
 
 #btnNewStudent{
     margin-left: 5px;
@@ -19,8 +19,8 @@
 .column{
     flex: 40%;
     margin: 15px;
+    justify-content: center;
 }
-
 
 .peopleCards{
     text-align: center;
@@ -34,3 +34,8 @@
     display: flex;
     justify-content: center;
 };
+
+#errorText{
+    text-align: center;
+    color: red;
+}
