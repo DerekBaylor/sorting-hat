@@ -4,6 +4,8 @@ Sorting Hat
 ## View App
 https://djb-sorting-hat.netlify.app/
 
+## Video 
+https://www.loom.com/share/3adbb18b61b641a694364474b8b17131
 ## Favorite Code
 const randomHouse = () => {
     const chosenHouse = houseArray[Math.floor(Math.random() * houseArray.length)];
