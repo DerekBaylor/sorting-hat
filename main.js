@@ -38,9 +38,8 @@ const firstYearCardBlock = () => {
     const cardString = `
     <div class="card peopleCards" style="width: 18rem;">
         <div class="card-body">
-            <h5 class="card-title">First Year's</h5>
-        </div>
-        <div id="studentArrayBody"></div>
+            <h5 class="card-title">First Year's</h5></div> 
+            <div id="studentArrayBody"></div>
     </div>
     `;
     renderToDom("#studentBlock", cardString);
@@ -92,6 +91,7 @@ hseColor = (studentHouse) => {
 
 const houseArray = ["Gryffindor", "Hufflepuff", "Ravenclaw", "Slytherin"];
 
+//favorite pieace of code. 
 const randomHouse = () => {
     const chosenHouse = houseArray[Math.floor(Math.random() * houseArray.length)];
     return chosenHouse;
