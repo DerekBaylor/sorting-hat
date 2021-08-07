@@ -13,14 +13,12 @@
     margin-left: 5px;
 }
 
-.row{
-    display: flex;
+#armyBlocks{
+    margin: 5px;
+    display: grid;
     justify-content: center;
-}
-.column{
-    flex: 40%;
-    margin: 15px;
-    justify-content: center;
+    grid-auto-flow: column;
+    flex: wrap;
 }
 
 .peopleCards{
