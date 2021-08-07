@@ -20,11 +20,11 @@ const printSortingForm = (studentObject = {}) => {
     const formString = `
         <form id="studentForm">
             <div id="formTitle"><h3>Enter First Year's Name</h3></div>
-            <div id="entryError"></div> 
+            <div id="errorText"></div> 
             <div id="submitBlock"> 
                 <div id=formId class="mb-3"?>
                     <label for="Student" class="sorting-form"> Student </label>
-                    <input required type="text" class="sorting-form" placeholder="Luna Lovegood" value="${studentObject.studentName || ""}" id="stdName">
+                    <input required type="text" class="sorting-form" placeholder="Luna Lovegood" value="${studentObject.studentName || ""}" id="stdName"/>
                 </div>
                 <button type="submit" id="btnNewStudent" class="btn btn-Sorting btn-primary sorting-form">Sort</button>
             </div>
@@ -51,11 +51,11 @@ const studentArray = [];
 const studentCard = (stdCardArray) => { 
     let cardString = "";
     stdCardArray.forEach((student, i) => {
+
         cardString += ` 
                 <div id="stdCard" class="card mb-3" style="width: 18rem;">
                     <div class="row g-0">
-                        <div class="col-md-4" id="hseColorBlock">
-                        </div>
+                        <div class="col-md-4" id="hseColorBlock" style="background-color: ${student.houseColor}"></div>
                         <div class="col-md-8">
                             <div class="card-body">
                               <h5 id="studentName" class="card-title">${student.studentName}</h5>
@@ -65,9 +65,30 @@ const studentCard = (stdCardArray) => {
                         </div>
                     </div>
                 </div>`;
+
     });
+    
     renderToDom("#studentArrayBody", cardString); 
+    
+    stdCardArray.forEach((_, i) => {
+        document.querySelector(`#delete--${i}`).addEventListener("click", expelStudent);
+    });
 };
+
+hseColor = (studentHouse) => {
+    if (studentHouse === "Gryffindor"){
+        return "red";
+    }
+    if (studentHouse === "Hufflepuff"){
+        return "yellow";
+    }
+    if (studentHouse === "Ravenclaw"){
+        return "blue";
+    }
+    if (studentHouse === "Slytherin"){
+        return "green";
+    }
+}
 
 const houseArray = ["Gryffindor", "Hufflepuff", "Ravenclaw", "Slytherin"];
 
@@ -78,14 +99,28 @@ const randomHouse = () => {
 
 const formSubmit = (event) =>{
     event.preventDefault();
-    const newStudent = {
-        studentName: document.querySelector("#stdName").value,
-        studentHouse: randomHouse (),
-    };
-    studentArray.push(newStudent);
-    studentCard(studentArray);
+    const nameEntry = document.querySelector("#stdName").value;
+    let errorMessage = `Please enter a valid name.`
+
+    if (nameEntry === '' || nameEntry=== null){
+        renderToDom("#errorText", errorMessage);
+    }
+
+    else{
+        const house = randomHouse();
+        errorMessage = "";
+        const newStudent = {
+            studentName:  nameEntry,         
+            studentHouse: house,
+            houseColor: hseColor(house),
+        };
+        studentArray.push(newStudent);
+        studentCard(studentArray);
+        renderToDom("#errorText", errorMessage);        
+    }
     document.forms["studentForm"].reset();
 };
+
 
 const deathEaterCardBlock = () => {
     const cardString = `
@@ -93,20 +128,16 @@ const deathEaterCardBlock = () => {
             <div class="card-body">
                 <h5 class="card-title">He Who Shall Not Be Named's Army</h5>
             </div>
-            <div id="voldyArmy"></div>
-            <div> ${anyDeathEaters()} </div>
+            <div id="voldyArmy">${anyDeathEaters()} </div>
         </div>
     `;
     renderToDom("#deathEaterBlock", cardString);
 };
 
+
 const anyDeathEaters = () => {
-    if (deathEaterArray > 0 ){
-        return "";
-    }else {
        return "No Death Eaters... yet." 
     }
-}
 
 const deathEaterArray = [];
 
@@ -139,7 +170,6 @@ const expelStudent = (event) => {
 
   const btnEvents = () => {
     document.querySelector("#btnStartSorting").addEventListener("click", btnClicks);
-    document.querySelector("#studentBlock").addEventListener("click", expelStudent);
   };
 
 const init = () => {
